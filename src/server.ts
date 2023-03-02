@@ -1,10 +1,18 @@
 import express, { Application, Request, Response } from 'express'
 import dotenv from 'dotenv'
+import database from './connections/database'
 
 dotenv.config()
 
 const server: Application = express()
 const PORT = process.env.PORT
+
+
+database().catch((err) => console.error(err));
+
+
+server.use(express.json())
+server.use(express.urlencoded({extended : true}))
 
 server.get('/', (req: Request, res: Response) => {
     res.status(200).json({
