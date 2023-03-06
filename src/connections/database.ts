@@ -1,6 +1,5 @@
 import mongoose from 'mongoose'
 import { ConnectionOptions } from 'tls'
-
 import dotenv from 'dotenv'
 
 dotenv.config()
