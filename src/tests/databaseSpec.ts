@@ -1,6 +1,5 @@
 // import mongoose from "mongoose";
 
-
 // mongoose.Promise = global.Promise
 
 // // beforeAll(() => {
@@ -11,4 +10,3 @@
 // //             console.warn('warning', error)
 // //         })
 // // })
-
