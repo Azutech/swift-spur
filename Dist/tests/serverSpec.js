@@ -10,5 +10,6 @@ describe('Tests server connection', () => {
         const request = (0, supertest_1.default)(server_1.default);
         const response = await request.get('/');
         expect(response.status).toEqual(200);
+        expect(response.body.message).toBe('Welcome to Swift-Spur \n Lets solve your financial problems');
     });
 });
