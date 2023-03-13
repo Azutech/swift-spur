@@ -28,13 +28,13 @@ export const register = async (req: Request, res: Response) => {
             emailVerified: false,
         })
 
-        // const accessToken = createJwt(
-        //     { email: newUser.email },
-        // )
+        const accessToken = createJwt(
+            { email: newUser.email },  
+        )
 
         if (!newUser)
             return res.status(402).json({ message: 'Unable to create user' })
-        // newUser.accessToken = accessToken
+        newUser.accessToken = accessToken
         await newUser.save()
         return res.status(202).json({
             success: true,
