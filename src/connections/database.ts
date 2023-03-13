@@ -4,7 +4,7 @@ import dotenv from 'dotenv'
 
 dotenv.config()
 mongoose.set('debug', true)
-const connectionParams = {
+export const connectionParams = {
     useNewUrlParser: true,
     useUnifiedTopology: true,
 }
