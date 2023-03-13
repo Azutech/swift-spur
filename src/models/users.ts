@@ -5,7 +5,7 @@ const userSchema = new Schema(
     {
         firstName: {
             type: String,
-            required: true,
+            required: [true, 'LastName is required'],
         },
 
         lastName: {
@@ -16,24 +16,24 @@ const userSchema = new Schema(
         email: {
             type: String,
             unique: true,
-            required: true,
+            required: [true, 'email is required'],
         },
 
         password: {
             type: String,
-            required: true,
+            required: [true, 'password is required'],
             trim: true,
         },
 
         mobileNumber: {
             type: Number,
-            required: true,
+            required: [true, 'mobileNumber is required'],
             trim: true,
         },
 
         sex: {
             type: String,
-            required: true,
+            required: [true, 'sex is required'],
         },
         emailVerified: {
             type: Boolean,
