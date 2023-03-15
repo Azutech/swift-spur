@@ -15,10 +15,10 @@ export const verificationMail = async (
   const msg = {
     to: email,
     from: 'azunna.onugha@outlook.com',
-    subject: 'Welcome to manga',
+    subject: 'Welcome to Swift-Spur',
     text: `Verify your account`,
     html: `<h2> Hello ${firstName} </h2>
-    <p>Welcome to Manga!</p>
+    <p>Welcome to SWift Spur!</p>
     <p>Please verify your account using code: <strong>${verificationCode}</strong> </p>`,
   };
 
