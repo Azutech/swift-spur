@@ -4,6 +4,8 @@ import { createJwt } from '../../utils/token'
 import { User } from '../../models/users'
 import { hash, compare } from 'bcrypt'
 import config from 'config'
+import { generateCode } from '../../utils/generateCode'
+import { mailVerification } from '../mail/sendGrid'
 
 dotenv.config()
 
@@ -17,6 +19,8 @@ const accessTokenCookieOptions: CookieOptions = {
 }
 
 export const register = async (req: Request, res: Response) => {
+    const code = generateCode()
+
     const { firstName, lastName, email, mobileNumber, password, sex } = req.body
 
     try {
@@ -36,14 +40,23 @@ export const register = async (req: Request, res: Response) => {
             password: hashPassword,
             sex,
             emailVerified: false,
+            verificationCode: code,
         })
 
         const accessToken = createJwt({ email: newUser.email })
 
         if (!newUser)
             return res.status(402).json({ message: 'Unable to create user' })
+
         newUser.accessToken = accessToken
+
         await newUser.save()
+
+        await mailVerification(
+            newUser.firstName,
+            newUser.email,
+            newUser.verificationCode as string
+        )
         return res.status(202).json({
             success: true,
             message: 'User has been created',
