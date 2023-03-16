@@ -1,5 +1,3 @@
-import jwt from 'jsonwebtoken'
-
 import { Request, Response, NextFunction } from 'express'
 import { verifyJwt } from '../utils/token'
 import client from '../utils/redis'
@@ -7,8 +5,6 @@ import { User } from '../models/users'
 import dotenv from 'dotenv'
 
 dotenv.config()
-
-const secret = process.env.TOKEN_SECRET as string
 
 export const deserializedUser = async (
     req: Request,

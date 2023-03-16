@@ -1,12 +1,13 @@
 import jwt, { SignOptions } from 'jsonwebtoken'
 import dotenv from 'dotenv'
-import config from 'config'
+// import config from 'config'
 
 dotenv.config()
 
 export const secret = process.env.TOKEN_SECRET as string
 const privateKey = process.env.TOKEN_PRIVATE_KEY as string
 const publicKey = process.env.TOKEN_PUBLIC_KEY as string
+const tokenExpiry = process.env.TOKEN_EXPIRY_DATE as string
 
 export const createJwt = (payload: Object, option: SignOptions = {}) => {
     // const privateKey = Buffer.from(
@@ -17,7 +18,7 @@ export const createJwt = (payload: Object, option: SignOptions = {}) => {
     console.log(privateKey)
     return jwt.sign(payload, privateKey, {
         ...(option && option),
-        expiresIn: '1d',
+        expiresIn: tokenExpiry,
     })
 }
 
