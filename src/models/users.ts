@@ -63,7 +63,7 @@ const userSchema = new Schema(
 )
 export const User = mongoose.model('user', userSchema)
 
-export const validate = (user: any) => {
+export const validateUser = (user: any) => {
     const schema = Joi.object({
         email: Joi.string()
             .email({ minDomainSegments: 2, tlds: { allow: ['com', 'net'] } })
@@ -72,7 +72,7 @@ export const validate = (user: any) => {
             .required(),
         password: Joi.string().regex(/^[a-zA-Z0-9]{3,30}$/),
         birthDate: Joi.number().integer().min(1900).max(2013).required(),
-        sex: Joi.string().equal(['M', 'F', 'MALE', 'FEMALE']).required(),
+        sex: Joi.string().valid(...['M', 'F', 'MALE', 'FEMALE']).required(),
     })
     return schema.validate(user)
 }
