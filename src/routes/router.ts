@@ -1,5 +1,5 @@
 import { Router } from 'express'
-import { user } from './users'
+import { user } from './auth/users'
 
 export const routes = Router()
 
