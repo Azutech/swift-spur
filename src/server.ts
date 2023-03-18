@@ -1,4 +1,5 @@
 import express, { Application, Request, Response } from 'express'
+import log from '../src/logger/customLog'
 import dotenv from 'dotenv'
 import { routes } from './routes/router'
 import database from './connections/database'
@@ -19,7 +20,7 @@ server.get('/', (req: Request, res: Response) => {
     res.status(200).json({
         message: 'Welcome to Swift-Spur \n Lets solve your financial problems',
     })
-    console.log('BOOM 🔥🔥')
+    log.info('BOOM 🔥🔥')
 })
 
 server.get('*', (req: Request, res: Response) => {
@@ -27,7 +28,7 @@ server.get('*', (req: Request, res: Response) => {
 })
 
 server.listen(PORT, () => {
-    console.log(`Express is listening at http://localhost:${PORT}`)
+    log.info(`Express is listening at http://localhost:${PORT}`)
 })
 
 export default server
