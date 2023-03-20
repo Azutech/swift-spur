@@ -49,6 +49,12 @@ const userSchema = new Schema(
             required: false,
         },
 
+        role: {
+            type: String,
+            enum: ['user', 'admin'],
+            default: 'user',
+        },
+
         verificationCode: {
             type: String,
             select: true,

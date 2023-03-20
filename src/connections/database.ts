@@ -1,5 +1,5 @@
-import mongoose, {ConnectOptions}from 'mongoose'
-import log from '../logger/customLog';
+import mongoose, { ConnectOptions } from 'mongoose'
+import log from '../logger/customLog'
 
 import dotenv from 'dotenv'
 
