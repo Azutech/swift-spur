@@ -31,8 +31,6 @@ export const getUser = async (
     const { id } = req.params
     try {
         const getThisUser = await User.findOne({ _id: id })
-            .exec()
-            .catch((err) => {})
         if (!getThisUser)
             return res
                 .status(404)
