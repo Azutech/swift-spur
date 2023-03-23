@@ -15,7 +15,7 @@ const logger = createLogger({
     transports: [
         new transports.Console({
             format: combine(
-                label({ message: true, label: 'MANGA EXPRESS SERVER!' }),
+                label({ message: true, label: 'SWIFT-SPUR SERVER!' }),
                 colorize(),
                 simple()
             ),
