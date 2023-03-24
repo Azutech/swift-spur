@@ -21,7 +21,7 @@ const accessTokenCookieOptions: CookieOptions = {
 export const register = async (req: Request, res: Response) => {
     const code = generateCode()
 
-    const { firstName, lastName, email, mobileNumber, password, sex } = req.body
+    const { firstName, lastName, email, mobileNumber, password, sex, birthDate} = req.body
 
     try {
         const existingUser = await User.findOne({ email: email })
@@ -41,6 +41,7 @@ export const register = async (req: Request, res: Response) => {
             sex,
             emailVerified: false,
             verificationCode: code,
+            birthDate
         })
 
         const accessToken = createJwt({ email: newUser.email })
