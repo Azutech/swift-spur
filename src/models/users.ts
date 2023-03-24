@@ -26,7 +26,7 @@ const userSchema = new Schema(
         },
 
         mobileNumber: {
-            type: Number,
+            type: String,
             required: [true, 'mobileNumber is required'],
             trim: true,
         },
@@ -40,13 +40,19 @@ const userSchema = new Schema(
             required: true,
             default: false,
         },
-        birthDay: {
+        birthDate: {
             type: Date,
             require: true,
         },
         profilePhoto: {
             type: String,
             required: false,
+        },
+
+        role: {
+            type: String,
+            enum: ['user', 'admin'],
+            default: 'user',
         },
 
         verificationCode: {
@@ -65,13 +71,17 @@ export const User = mongoose.model('user', userSchema)
 
 export const validateUser = (user: any) => {
     const schema = Joi.object({
+        firstName: Joi.string().required(),
+        lastName: Joi.string().required(),
+        mobileNumber: Joi.string().length(11).required(),
+        // .pattern(/[6-9]{1}[0-9]{9}/).required(),
         email: Joi.string()
             .email({ minDomainSegments: 2, tlds: { allow: ['com', 'net'] } })
             .min(5)
             .max(50)
             .required(),
-        password: Joi.string().regex(/^[a-zA-Z0-9]{3,30}$/),
-        birthDate: Joi.number().integer().min(1900).max(2013).required(),
+        password: Joi.string().pattern(new RegExp("^[a-zA-Z0-9@]{3,30}$")),
+        birthDate: Joi.date().greater(new Date("1940-01-01")).less(new Date("2018-01-01")).required(),
         sex: Joi.string().valid(...['M', 'F', 'MALE', 'FEMALE']).required(),
     })
     return schema.validate(user)

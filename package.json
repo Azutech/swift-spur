@@ -6,7 +6,7 @@
     "scripts": {
         "test": "npm run build && npm run jasmine",
         "dev": "nodemon src/server.ts",
-        "start": "node Dist/server.js",
+        "start": "node Dist/src/server.js",
         "prettier": "npx prettier --write .",
         "lint": "eslint --ext .ts . --fix",
         "build": "npx tsc",
@@ -45,6 +45,7 @@
         "express": "^4.18.2",
         "jsonwebtoken": "^9.0.0",
         "mongodb-memory-server": "^8.12.0",
-        "mongoose": "^7.0.0"
+        "mongoose": "^7.0.0",
+        "winston": "^3.8.2"
     }
 }
