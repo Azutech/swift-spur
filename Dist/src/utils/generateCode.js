@@ -1,12 +1,13 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.generateCode = void 0;
+'use strict'
+Object.defineProperty(exports, '__esModule', { value: true })
+exports.generateCode = void 0
 const generateCode = () => {
-    const characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
-    let code = '';
+    const characters =
+        '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'
+    let code = ''
     for (let i = 0; i < 6; i++) {
-        code += characters[Math.floor(Math.random() * characters.length)];
+        code += characters[Math.floor(Math.random() * characters.length)]
     }
-    return code;
-};
-exports.generateCode = generateCode;
+    return code
+}
+exports.generateCode = generateCode

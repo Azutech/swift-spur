@@ -1,6 +1,6 @@
 import mongoose, { Schema } from 'mongoose'
 import Joi from 'joi'
-import  { AddressSchema}from './schema/AddressSchema'
+import { AddressSchema } from './schema/AddressSchema'
 
 const userSchema = new Schema(
     {
@@ -60,9 +60,14 @@ const userSchema = new Schema(
             type: String,
             select: true,
         },
-        address : {
+        address: {
             type: AddressSchema,
-            default: {}
+            default: {},
+        },
+
+        image : {
+            type: String,
+            required: false
         },
 
         accessToken: {
@@ -85,9 +90,14 @@ export const validateUser = (user: any) => {
             .min(5)
             .max(50)
             .required(),
-        password: Joi.string().pattern(new RegExp("^[a-zA-Z0-9@]{3,30}$")),
-        birthDate: Joi.date().greater(new Date("1940-01-01")).less(new Date("2018-01-01")).required(),
-        sex: Joi.string().valid(...['M', 'F', 'MALE', 'FEMALE']).required(),
+        password: Joi.string().pattern(new RegExp('^[a-zA-Z0-9@]{3,30}$')),
+        birthDate: Joi.date()
+            .greater(new Date('1940-01-01'))
+            .less(new Date('2018-01-01'))
+            .required(),
+        sex: Joi.string()
+            .valid(...['M', 'F', 'MALE', 'FEMALE'])
+            .required(),
     })
     return schema.validate(user)
 }

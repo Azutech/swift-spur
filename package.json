@@ -22,6 +22,7 @@
         "@types/jasmine": "^4.3.1",
         "@types/jsonwebtoken": "^9.0.1",
         "@types/mongodb-memory-server": "^2.3.0",
+        "@types/multer": "^1.4.7",
         "@types/node": "^18.14.4",
         "@types/supertest": "^2.0.12",
         "@typescript-eslint/eslint-plugin": "^5.54.0",
@@ -40,12 +41,14 @@
     "dependencies": {
         "@sendgrid/mail": "^7.7.0",
         "bcrypt": "^5.1.0",
+        "cloudinary": "^1.35.0",
         "config": "^3.3.9",
         "dotenv": "^16.0.3",
         "express": "^4.18.2",
         "jsonwebtoken": "^9.0.0",
         "mongodb-memory-server": "^8.12.0",
         "mongoose": "^7.0.0",
+        "multer": "^1.4.5-lts.1",
         "winston": "^3.8.2"
     }
 }
