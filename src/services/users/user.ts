@@ -68,3 +68,38 @@ export const destroyerUser = async (
         return next(err)
     }
 }
+
+export const address = async (req: Request, res: Response) => {
+        const {id} = req.params
+        const {address, city, state, zipcode} = req.body
+
+        if (!(address || city || state || zipcode)){
+            return res.status(404).json({
+                message: 'Input parameters required'
+            })
+        }
+
+        try {
+            const user = await User.findOne({_id: id})
+            if(!user) return res.status(404).json({message: 'user not found'})
+  
+            const update = await User.findOneAndUpdate({_id: id }, {
+                $set: {
+                    Address: address,
+                    'address.city': city,
+                    'address.state': state,
+                    'address.zipcode': zipcode,
+                }
+            })
+            console.log(update);
+            return res.status(200).json({
+              message: 'Address has been updated',
+              status: true,
+              data: update,
+            });
+
+        } catch (err) {
+            console.error(err)
+            
+        }
+}

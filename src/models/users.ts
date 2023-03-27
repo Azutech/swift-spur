@@ -1,5 +1,6 @@
 import mongoose, { Schema } from 'mongoose'
 import Joi from 'joi'
+import  { AddressSchema}from './schema/AddressSchema'
 
 const userSchema = new Schema(
     {
@@ -58,6 +59,10 @@ const userSchema = new Schema(
         verificationCode: {
             type: String,
             select: true,
+        },
+        address : {
+            type: AddressSchema,
+            default: {}
         },
 
         accessToken: {
