@@ -1,9 +1,11 @@
 import SendMail from '@sendgrid/mail'
 import dotenv from 'dotenv'
+import { emailTemplate } from '../../utils/templates/verifyEmail'
 
 dotenv.config()
 
 const SENDGRIDKEY = process.env.SENDGRID_API_KEY as string
+const url = process.env.BASE_URL as string
 
 SendMail.setApiKey(SENDGRIDKEY)
 
@@ -12,14 +14,14 @@ export const mailVerification = async (
     email: string,
     verificationCode: string
 ) => {
+    const link = `${url}/auth/confirm/${verificationCode}`
+
     const msg = {
         to: email,
         from: 'azunna.onugha@outlook.com',
         subject: 'Welcome to Swift-Spur',
         text: `Verify your account`,
-        html: `<h2> Hello ${firstName} </h2>
-    <p>Welcome to SWift Spur!</p>
-    <p>Please verify your account using code: <strong>${verificationCode}</strong> </p>`,
+        html: emailTemplate(firstName, link),
     }
 
     SendMail.send(msg)
