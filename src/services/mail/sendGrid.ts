@@ -14,15 +14,14 @@ export const mailVerification = async (
     email: string,
     verificationCode: string
 ) => {
-    const link = `${url}/auth/confirm/${verificationCode}`;
+    const link = `${url}/auth/confirm/${verificationCode}`
 
     const msg = {
         to: email,
         from: 'azunna.onugha@outlook.com',
         subject: 'Welcome to Swift-Spur',
         text: `Verify your account`,
-        html: emailTemplate(firstName, link)
-    ,
+        html: emailTemplate(firstName, link),
     }
 
     SendMail.send(msg)
