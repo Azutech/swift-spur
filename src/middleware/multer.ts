@@ -16,8 +16,7 @@ const fileFilter = function (
     req: Request,
     file: Express.Multer.File,
     cb: (error: Error | null, acceptFile: boolean) => void
-    )
-{
+) {
     if (!file.mimetype.match(/png|jpeg|jpg|gif$/i)) {
         cb(new Error('File type not supported'), false)
         return

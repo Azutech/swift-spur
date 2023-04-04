@@ -65,9 +65,9 @@ const userSchema = new Schema(
             default: {},
         },
 
-        image : {
+        image: {
             type: String,
-            required: false
+            required: false,
         },
 
         accessToken: {

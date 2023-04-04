@@ -9,3 +9,9 @@ cloudinary.config({
     api_secret: process.env.CLOUDINARY_API_SECRET,
     secure: true,
 })
+
+export const uploadToCloudinary = (file: string, folder: string) => {
+    return cloudinary.uploader.upload(file, { folder }).then((data) => {
+        return data
+    })
+}
