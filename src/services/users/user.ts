@@ -1,5 +1,6 @@
 import { User } from '../../models/users'
 import { Request, Response, NextFunction } from 'express'
+import { uploadToCloudinary } from '../../utils/cloudinary'
 
 export const getAllUsers = async (
     req: Request,
@@ -66,6 +67,29 @@ export const destroyerUser = async (
     } catch (err) {
         console.log(err)
         return next(err)
+    }
+}
+
+export const uploadImage = async (req: Request, res: Response) => {
+    const { id } = req.params
+    try {
+        const data = await uploadToCloudinary(req.file?.path, 'file')
+
+        const uploadImg = await User.findOneAndUpdate(
+            { _id: id },
+            { $set: { image: data } },
+            { new: true }
+        )
+        if (!uploadImg) {
+            return res.status(404).json({ err: 'unable to upload image' })
+        }
+        return res.status(202).json({
+            msg: 'Image uploaded successfully',
+            data: uploadImg,
+        })
+    } catch (err) {
+        console.error(err)
+        res.status(500).json('server')
     }
 }
 

@@ -12,13 +12,9 @@ const storage = multer.diskStorage({
     },
 })
 
-const fileFilter = (
-    req: Request,
-    file: Express.Multer.File,
-    cb: FileFilterCallback
-) => {
+const fileFilter = (req: Request, file: Express.Multer.File, cb: any) => {
     if (!file.mimetype.match(/png|jpeg|jpg|gif$/i)) {
-        cb(null, false)
+        cb(new Error('File type not supported'), false)
         return
     }
     cb(null, true)
