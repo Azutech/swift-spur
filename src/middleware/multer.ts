@@ -12,18 +12,18 @@ const storage = multer.diskStorage({
     },
 })
 
-const fileFilter = function (
+const fileFilter = (
     req: Request,
     file: Express.Multer.File,
-    cb: (error: Error | null, acceptFile: boolean) => void
-) {
+    cb: FileFilterCallback
+) => {
     if (!file.mimetype.match(/png|jpeg|jpg|gif$/i)) {
-        cb(new Error('File type not supported'), false)
+        cb(null, false)
         return
     }
     cb(null, true)
 }
 
-// const uploads = multer({ storage: storage, fileFilter: fileFilter })
+const uploads = multer({ storage: storage, fileFilter: fileFilter })
 
-// export default uploads
+export default uploads
