@@ -1,4 +1,4 @@
-export const emailTemplate = (name: string, link : string) => {
+export const emailTemplate = (firstName: string, link : string) => {
     return `
     <!DOCTYPE html>
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:v="urn:schemas-microsoft-com:vml"
@@ -381,7 +381,7 @@ export const emailTemplate = (name: string, link : string) => {
 							<tr>
 								<td>
 									<div class="text" style="padding: 0 2.5em; text-align: center;">
-										<h2>Congratulations ${name}</h2>
+										<h2>Congratulations ${firstName}</h2>
 										<h3>Welcome to Swift-Spur</h3>
 										<h4>Your Profile will be activated you click this ${link}</h4>
 										<!--<div style="display: flex; justify-content: space-between;">-->
