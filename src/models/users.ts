@@ -64,6 +64,11 @@ const userSchema = new Schema(
             type: String,
             index: true,
         },
+
+        kycVerificationStatus: {
+            type: String,
+            enum: ['pending', 'approved', 'rejected'],
+        },
     },
     { timestamps: true }
 )
@@ -80,9 +85,14 @@ export const validateUser = (user: any) => {
             .min(5)
             .max(50)
             .required(),
-        password: Joi.string().pattern(new RegExp("^[a-zA-Z0-9@]{3,30}$")),
-        birthDate: Joi.date().greater(new Date("1940-01-01")).less(new Date("2018-01-01")).required(),
-        sex: Joi.string().valid(...['M', 'F', 'MALE', 'FEMALE']).required(),
+        password: Joi.string().pattern(new RegExp('^[a-zA-Z0-9@]{3,30}$')),
+        birthDate: Joi.date()
+            .greater(new Date('1940-01-01'))
+            .less(new Date('2018-01-01'))
+            .required(),
+        sex: Joi.string()
+            .valid(...['M', 'F', 'MALE', 'FEMALE'])
+            .required(),
     })
     return schema.validate(user)
 }
