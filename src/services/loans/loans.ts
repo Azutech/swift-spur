@@ -31,7 +31,10 @@ export const loanEligible = async (req: Request, res: Response) => {
         })
 
 
-    } catch (error) {}
+    } catch (err) {
+        console.error(err)
+        res.status(502).json({err: 'Server error'})
+    }
 }
 
 export const loanApproval = async (req: Request, res: Response) => {}
