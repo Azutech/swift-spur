@@ -1,6 +1,7 @@
 import mongoose, { Schema } from 'mongoose'
 import Joi from 'joi'
 import { AddressSchema } from './schema/AddressSchema'
+import { IdentitySchema } from './schema/identitySchema'
 
 const userSchema = new Schema(
     {
@@ -35,6 +36,11 @@ const userSchema = new Schema(
         sex: {
             type: String,
             required: [true, 'sex is required'],
+        },
+
+        IdendityNumber : {
+            type: IdentitySchema,
+            required: {}
         },
         emailVerified: {
             type: Boolean,
