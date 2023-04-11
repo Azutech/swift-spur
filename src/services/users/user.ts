@@ -1,5 +1,6 @@
 import { User } from '../../models/users'
 import { Request, Response, NextFunction } from 'express'
+import { uploadToCloudinary } from '../../utils/cloudinary'
 
 export const getAllUsers = async (
     req: Request,
