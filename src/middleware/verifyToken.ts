@@ -46,7 +46,6 @@ export const deserializedUser = async (
                 .json({ message: 'User with that token no longer exist' })
         }
         res.locals.user = user
-
         next()
     } catch (err) {
         return err

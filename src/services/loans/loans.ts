@@ -6,34 +6,31 @@ import { fail } from 'assert'
 export const loanEligible = async (req: Request, res: Response) => {
     const { id } = req.params
     try {
-        const user = await User.findOne({_id: id})
+        const user = await User.findOne({ _id: id })
         if (!user) {
-            return res.status(404).json({err: 'user not found'})
+            return res.status(404).json({ err: 'user not found' })
         }
 
-        if (user.kycVerificationStatus === 'pending') { 
-            return res.status(404).json({err: "KYC is yet to be approved"})
+        if (user.kycVerificationStatus === 'pending') {
+            return res.status(404).json({ err: 'KYC is yet to be approved' })
         } else if (user.kycVerificationStatus === 'rejected') {
-            return res.status(404).json({err: "KYC is yet to be approved"})
+            return res.status(404).json({ err: 'KYC is yet to be approved' })
         }
 
-        const loans = await Loans.findOne({loanEligiblity: false})
+        const loans = await Loans.findOne({ loanEligiblity: false })
 
-        if(!loans) return res.status(404).json({err: 'Loan is uneligible'})
+        if (!loans) return res.status(404).json({ err: 'Loan is uneligible' })
 
         if (user.kycVerificationStatus === 'approved') {
-            return loans.loanEligiblity = true
+            return (loans.loanEligiblity = true)
         }
         await loans.save()
         return res.status(200).json({
-            message : "You are eligible for the loan"
-            
+            message: 'You are eligible for the loan',
         })
-
-
     } catch (err) {
         console.error(err)
-        res.status(502).json({err: 'Server error'})
+        res.status(502).json({ err: 'Server error' })
     }
 }
 

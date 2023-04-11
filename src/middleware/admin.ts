@@ -10,7 +10,7 @@ export const isAdmin = async (
     try {
         const user = await User.findById(id)
         if (!user) {
-            return res.status(200).json({ message: 'Unathorized' })
+            return res.status(403).json({ message: 'Unathorized' })
         }
 
         //    const roles = await User.find({role : {$in : user.role}})

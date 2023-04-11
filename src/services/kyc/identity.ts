@@ -94,3 +94,41 @@ export const addNIN = async (req: Request, res: Response) => {
         return res.status(500).json({ err: 'server error' })
     }
 }
+
+export const kyc = async (req: Request, res: Response) => {
+    const { id } = req.params
+
+    try {
+        const user = await User.findById(id)
+        if (!user) return res.status(404).json({ err: 'User not found' })
+
+        if ((user.address || user.IdendityNumber || user.image) === null) {
+            return res.status(404).json({ err: 'documents not updated' })
+        }
+
+        const userId = await User.findByIdAndUpdate(
+            { _id: id },
+            {
+                $set: {
+                    kycVerificationStatus: 'approved',
+                },
+            }
+        )
+
+        if (!userId)
+            return res.status(404).json({ err: 'Unable to approve KYC' })
+
+        await userId.save()
+
+        return res.status(200).json({
+            msg: 'KYC has been appproved',
+            data: userId,
+        })
+    } catch (err: any) {
+        console.error(err)
+        res.status(500).json({
+            status: 'server error',
+            message: err.message,
+        })
+    }
+}

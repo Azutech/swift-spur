@@ -84,6 +84,7 @@ const userSchema = new Schema(
         kycVerificationStatus: {
             type: String,
             enum: ['pending', 'approved', 'rejected'],
+            default: 'pending',
         },
     },
     { timestamps: true }
