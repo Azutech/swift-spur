@@ -1,10 +1,6 @@
 import { Router } from 'express'
 import { isAdmin } from '../../middleware/admin'
-import {
-    getAllUsers,
-    getUser,
-    destroyerUser,
-} from '../../services/users/user'
+import { getAllUsers, getUser, destroyerUser } from '../../services/users/user'
 
 export const admin = Router()
 

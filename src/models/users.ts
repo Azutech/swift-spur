@@ -38,9 +38,9 @@ const userSchema = new Schema(
             required: [true, 'sex is required'],
         },
 
-        IdendityNumber : {
+        IdendityNumber: {
             type: IdentitySchema,
-            required: {}
+            required: {},
         },
         emailVerified: {
             type: Boolean,

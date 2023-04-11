@@ -69,5 +69,3 @@ export const destroyerUser = async (
         return next(err)
     }
 }
-
-

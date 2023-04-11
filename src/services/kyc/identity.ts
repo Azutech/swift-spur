@@ -1,7 +1,6 @@
-import { Request, Response } from "express"
-import { User } from "../../models/users"
-import { uploadToCloudinary } from "../../utils/cloudinary"
-
+import { Request, Response } from 'express'
+import { User } from '../../models/users'
+import { uploadToCloudinary } from '../../utils/cloudinary'
 
 export const uploadImage = async (req: Request, res: Response) => {
     const { id } = req.params
@@ -22,7 +21,7 @@ export const uploadImage = async (req: Request, res: Response) => {
         })
     } catch (err) {
         console.error(err)
-        res.status(500).json('server')
+        return res.status(500).json({ err: 'server error' })
     }
 }
 
@@ -59,24 +58,39 @@ export const address = async (req: Request, res: Response) => {
         })
     } catch (err) {
         console.error(err)
+        return res.status(500).json({ err: 'server error' })
     }
 }
 
 export const addNIN = async (req: Request, res: Response) => {
     const { id } = req.params
 
-    const  { NIN } = req.body
+    const { NIN } = req.body
 
-    if(!NIN ) {return res.status(404).json({err: 'Input parameters required'})}
+    if (!NIN) {
+        return res.status(404).json({ err: 'Input parameters required' })
+    }
 
     try {
-        const user = await User.findOne({_id: id})
-        if(!user) {return res.status(404).json({err: 'user not found'})}
+        const user = await User.findOne({ _id: id })
+        if (!user) {
+            return res.status(404).json({ err: 'user not found' })
+        }
 
-        
-
-
+        const userId = await User.findOneAndUpdate(
+            { _id: id },
+            {
+                $set: {
+                    IdendityNumber: NIN,
+                },
+            }
+        )
+        return res.status(201).json({
+            message: 'NIN number has been added',
+            data: userId,
+        })
     } catch (err) {
         console.error(err)
+        return res.status(500).json({ err: 'server error' })
     }
 }

@@ -10,10 +10,13 @@ cloudinary.config({
     secure: true,
 })
 
-export const uploadToCloudinary = (path: string | undefined, folder: string) => {
-
+export const uploadToCloudinary = (
+    path: string | undefined,
+    folder: string
+) => {
     if (!path) {
-        throw new Error('Path is required for uploadToCloudinary function') }
+        throw new Error('Path is required for uploadToCloudinary function')
+    }
     return cloudinary.uploader.upload(path, { folder }).then((data) => {
         return data
     })
