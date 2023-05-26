@@ -82,3 +82,29 @@ export const getOneLoan = async (req: Request, res: Response) => {
         })
     }
 }
+
+export const getAllLoanUser = async (req: Request, res: Response) => {
+    try {
+        const allLoans = await Loans.find().populate({path: 'userId'})
+        if(!allLoans) {
+            return res.status(404).json({err: 'Unable to perform this function'})
+        }
+
+        const loans = allLoans.map((item) => {
+            const itemLoans = item.userId
+            return itemLoans
+        })
+
+        return res.status(200).json({
+            success: true,
+            data: loans
+        })
+    } catch (err: any) {
+        console.error(err)
+        return res.status(501).json({
+            success: false,
+            status: 'server error',
+            message: err.message
+        })
+    }
+}

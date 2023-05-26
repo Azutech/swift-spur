@@ -1,7 +1,8 @@
 import { Router } from 'express'
-import { loanEligible, getOneLoan } from '../../services/loans/loans'
+import { loanEligible, getOneLoan, getAllLoanUser} from '../../services/loans/loans'
 
 export const loan = Router()
 
 loan.get('/loaneligibity/:id', loanEligible)
-loan.get('/loans/:loanid', getOneLoan)
+loan.get('/loansOne/:loanid', getOneLoan)
+loan.get('/loanUsers', getAllLoanUser )
