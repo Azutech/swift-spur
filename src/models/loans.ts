@@ -1,6 +1,5 @@
-import mongoose, { Schema, model } from 'mongoose'
+import { Schema, model } from 'mongoose'
 import { User } from './users'
-import { required } from 'joi'
 
 const loanSchema = new Schema(
     {

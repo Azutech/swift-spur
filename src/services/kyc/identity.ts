@@ -95,7 +95,7 @@ export const addNIN = async (req: Request, res: Response) => {
     }
 }
 
-export const kyc = async (req: Request, res: Response) => {
+export const kycUpdate = async (req: Request, res: Response) => {
     const { id } = req.params
 
     try {
