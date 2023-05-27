@@ -1,6 +1,6 @@
 node_modules
 .env
 logs
-
+Dockerfile
 .space
 Spacefile
