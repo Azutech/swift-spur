@@ -1,10 +1,10 @@
 export const passGenerator = () => {
-    const characters = '0123456789';
-  let code = '';
+    const characters = '0123456789'
+    let code = ''
 
-  for (let i = 0; i < 6; i++) {
-    code += characters[Math.floor(Math.random() * characters.length)];
-  }
+    for (let i = 0; i < 6; i++) {
+        code += characters[Math.floor(Math.random() * characters.length)]
+    }
 
-  return code;
+    return code
 }

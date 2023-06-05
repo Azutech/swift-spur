@@ -1,4 +1,4 @@
-import { CookieOptions, Request, Response } from 'express'
+import { CookieOptions, NextFunction, Request, Response } from 'express'
 import dotenv from 'dotenv'
 import { createJwt } from '../../utils/token'
 import { User } from '../../models/users'
@@ -7,6 +7,7 @@ import config from 'config'
 import { generateCode } from '../../utils/generateCode'
 import { passGenerator } from '../../utils/passwordCode'
 import { mailVerification } from '../mail/sendGrid'
+import { AppError } from '../../utils/errors'
 
 dotenv.config()
 
@@ -19,7 +20,11 @@ const accessTokenCookieOptions: CookieOptions = {
     sameSite: 'lax',
 }
 
-export const register = async (req: Request, res: Response) => {
+export const register = async (
+    req: Request,
+    res: Response,
+    next: NextFunction
+) => {
     const code = generateCode()
 
     const {
@@ -35,9 +40,7 @@ export const register = async (req: Request, res: Response) => {
     try {
         const existingUser = await User.findOne({ email: email })
         if (existingUser) {
-            return res.status(404).json({
-                message: 'User already exist',
-            })
+            return next(new AppError('User already Exist', 404))
         }
         const hashPassword = await hash(password, 10)
 
@@ -55,8 +58,7 @@ export const register = async (req: Request, res: Response) => {
 
         const accessToken = createJwt({ email: newUser.email })
 
-        if (!newUser)
-            return res.status(402).json({ message: 'Unable to create user' })
+        if (!newUser) return next(new AppError('Unable to Create User', 404))
 
         newUser.accessToken = accessToken
 
@@ -72,22 +74,26 @@ export const register = async (req: Request, res: Response) => {
             message: 'User has been created',
             data: newUser,
         })
-    } catch (err) {
-        console.log(err)
-        return res.status(404).json({ message: `User not created ${err}` })
+    } catch (err: any) {
+        console.error(err)
+        return next(new AppError(`Server Error ${err.message}`, 500))
     }
 }
 
-export const authenticate = async (req: Request, res: Response) => {
+export const authenticate = async (
+    req: Request,
+    res: Response,
+    next: NextFunction
+) => {
     const { email, password } = req.body
 
     const realCustomer = await User.findOne({ email: email })
     if (!realCustomer) {
-        return res.status(404).json({ message: 'User not found' })
+        return next(new AppError('User does not Exist', 404))
     }
     const hashPassword = compare(password, realCustomer.password)
     if (!hashPassword) {
-        return res.status(404).json({ error: 'Invalid Credential' })
+        return next(new AppError('Invalid Credentials', 404))
     }
 
     try {
@@ -103,23 +109,29 @@ export const authenticate = async (req: Request, res: Response) => {
             message: 'User logged in successfully',
             access_token,
         })
-    } catch (err) {
-        return err
+    } catch (err: any) {
+        console.error(err)
+        return next(new AppError(`Server Error ${err.message}`, 500))
     }
 }
 
-export const forgotpass = async (req: Request, res: Response) => {
-    
-
+export const forgotpass = async (
+    req: Request,
+    res: Response,
+    next: NextFunction
+) => {
     const code = passGenerator()
 
-    const { email } = req.body
+    try {
+        const { email } = req.body
 
-     const founder = User.findOne({email: email})
+        const founder = User.findOne({ email: email })
 
-     if(!founder) {
-        return 
+        if (!founder) {
+            return next(new AppError('User does not exist', 404))
+        }
+    } catch (err: any) {
+        console.error(err)
+        return next(new AppError(`Server Error ${err.message}`, 501))
     }
-
-
 }
