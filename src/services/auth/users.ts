@@ -6,8 +6,10 @@ import { hash, compare } from 'bcrypt'
 import config from 'config'
 import { generateCode } from '../../utils/generateCode'
 import { passGenerator } from '../../utils/passwordCode'
-import { mailVerification } from '../mail/sendGrid'
+import { mailVerification, forgotPasswordMail } from '../mail/sendGrid'
 import { AppError } from '../../utils/errors'
+import { Token } from '../../models/token'
+
 
 dotenv.config()
 
@@ -19,6 +21,8 @@ const accessTokenCookieOptions: CookieOptions = {
     httpOnly: true,
     sameSite: 'lax',
 }
+
+const CLIENT_URL = process.env.CLIENT_URL as string
 
 export const register = async (
     req: Request,
@@ -125,11 +129,29 @@ export const forgotpass = async (
     try {
         const { email } = req.body
 
-        const founder = User.findOne({ email: email })
+        const founder = await User.findOne({ email: email })
 
         if (!founder) {
-            return next(new AppError('User does not exist', 404))
+            return next(new AppError('Email not found', 404))
         }
+
+        let token = await Token.findOne({ owner: founder._id })
+        if (token) await token.deleteOne()
+
+        const newToken = await new Token({
+            owner: founder._id,
+            token: code,
+        }).save()
+
+        const link = `${CLIENT_URL}/passwordReset?token=${code}/&id=${founder._id}`
+
+        await forgotPasswordMail(founder.firstName, founder.email, link)
+
+        return res.status(200).json({
+            success: true,
+            message: 'mail has been sent to email',
+            data: newToken,
+        })
     } catch (err: any) {
         console.error(err)
         return next(new AppError(`Server Error ${err.message}`, 501))
