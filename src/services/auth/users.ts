@@ -5,6 +5,7 @@ import { User } from '../../models/users'
 import { hash, compare } from 'bcrypt'
 import config from 'config'
 import { generateCode } from '../../utils/generateCode'
+import { passGenerator } from '../../utils/passwordCode'
 import { mailVerification } from '../mail/sendGrid'
 
 dotenv.config()
@@ -105,4 +106,20 @@ export const authenticate = async (req: Request, res: Response) => {
     } catch (err) {
         return err
     }
+}
+
+export const forgotpass = async (req: Request, res: Response) => {
+    
+
+    const code = passGenerator()
+
+    const { email } = req.body
+
+     const founder = User.findOne({email: email})
+
+     if(!founder) {
+        return 
+    }
+
+
 }
