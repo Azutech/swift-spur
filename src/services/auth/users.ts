@@ -69,8 +69,8 @@ export const register = async (
         await newUser.save()
 
         await mailVerification(
-            newUser.firstName,
-            newUser.email,
+            newUser.firstName as string,
+            newUser.email as string,
             newUser.verificationCode as string
         )
         return res.status(202).json({
@@ -95,7 +95,7 @@ export const authenticate = async (
     if (!realCustomer) {
         return next(new AppError('User does not Exist', 404))
     }
-    const hashPassword = compare(password, realCustomer.password)
+    const hashPassword = compare(password, String(realCustomer.password))
     if (!hashPassword) {
         return next(new AppError('Invalid Credentials', 404))
     }
@@ -145,7 +145,7 @@ export const forgotpass = async (
 
         const link = `${CLIENT_URL}/passwordReset?token=${code}/&id=${founder._id}`
 
-        await forgotPasswordMail(founder.firstName, founder.email, link)
+        await forgotPasswordMail(String(founder.firstName), String(founder.email), link)
 
         return res.status(200).json({
             success: true,
