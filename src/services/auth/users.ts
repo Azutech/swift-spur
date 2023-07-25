@@ -10,7 +10,6 @@ import { mailVerification, forgotPasswordMail } from '../mail/sendGrid'
 import { AppError } from '../../utils/errors'
 import { Token } from '../../models/token'
 
-
 dotenv.config()
 
 const accessTokenCookieOptions: CookieOptions = {
@@ -145,7 +144,11 @@ export const forgotpass = async (
 
         const link = `${CLIENT_URL}/passwordReset?token=${code}/&id=${founder._id}`
 
-        await forgotPasswordMail(String(founder.firstName), String(founder.email), link)
+        await forgotPasswordMail(
+            String(founder.firstName),
+            String(founder.email),
+            link
+        )
 
         return res.status(200).json({
             success: true,

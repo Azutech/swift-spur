@@ -14,7 +14,7 @@ database().catch((err) => console.error(err))
 server.use(express.json())
 server.use(express.urlencoded({ extended: true }))
 
-server.use('/api',routes)
+server.use('/api', routes)
 
 server.get('/', (req: Request, res: Response) => {
     res.status(200).json({
