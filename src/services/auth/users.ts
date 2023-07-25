@@ -62,8 +62,8 @@ export const register = async (req: Request, res: Response) => {
         await newUser.save()
 
         await mailVerification(
-            newUser.firstName,
-            newUser.email,
+            newUser.firstName as string,
+            newUser.email as string,
             newUser.verificationCode as string
         )
         return res.status(202).json({
@@ -84,7 +84,7 @@ export const authenticate = async (req: Request, res: Response) => {
     if (!realCustomer) {
         return res.status(404).json({ message: 'User not found' })
     }
-    const hashPassword = compare(password, realCustomer.password)
+    const hashPassword = compare(password, realCustomer.password as string)
     if (!hashPassword) {
         return res.status(404).json({ error: 'Invalid Credential' })
     }

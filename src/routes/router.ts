@@ -1,4 +1,4 @@
-        import { Router } from 'express'
+import { Router } from 'express'
 import { user } from './auth/users'
 import { admin } from './users/users'
 
